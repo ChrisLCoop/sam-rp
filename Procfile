@@ -1,1 +1,1 @@
-web: gunicorn vepromec.wsgi
+web: python manage.py collectstatic && gunicorn vepromec.wsgi
