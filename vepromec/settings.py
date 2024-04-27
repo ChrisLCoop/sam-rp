@@ -24,13 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = [
-    'www.vepromec.com',
-    '.vepromec.com',
-    'vepromec.com'
-]
+DEBUG = True
+
+ALLOWED_HOSTS = []
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
@@ -88,8 +85,8 @@ WSGI_APPLICATION = 'vepromec.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': config('ENGINE_DB'),
-        'NAME': config('NAME_DB'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -141,13 +138,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-"""ALLOWED_HOSTS = ['localhost','web-production-fd01.up.railway.app']
+ALLOWED_HOSTS = ['localhost','web-production-fd01.up.railway.app']
 
-CSRF_TRUSTED_ORIGINS = ['http://*','https://web-production-fd01.up.railway.app']"""
+CSRF_TRUSTED_ORIGINS = ['http://*','https://web-production-fd01.up.railway.app']
 
-if not DEBUG:
-    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
-    # and renames the files with unique names for each version to support long-term caching
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
